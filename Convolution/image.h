@@ -28,7 +28,7 @@ namespace std{
     template<typename T>
     std::istream& operator>> (std::istream&  is , std::vector<T>& vec)
     {
-        std::copy(std::istream_iterator<T>(is),std::istream_iterator<T>(), std::back_inserter(vec));
+        std::copy(std::istream_iterator<T>(is),std::istream_iterator<T>(),std::back_inserter(vec));
         return is;
     }
 
@@ -48,7 +48,7 @@ public:
     Image(std::string imgname);
     int index(int i,int j){return i*width+j;}
     friend std::istream& operator>> (std::istream&  is , Image<T>& a);
-    friend std::ostream& operator<< (std::ostream&  os , const Image<T>& a );
+    friend std::ostream& operator<< (std::ostream&  os , const Image<T>& a);
     int geth()const{return height;}
     int getw()const{return width;}
     int getmv()const{return maxval;}
@@ -69,23 +69,20 @@ Image<T>::Image(std::string imgname)
         std::cout<<"Width:"<<width<<std::endl;
         std::cout<<"Height:"<<height<<std::endl;
         std::cout<<"Maxval:"<<maxval<<std::endl;
-        //std::cout<<this;
         std::cout<< "data:\n"<<data<<std::endl;
         file.close();
     }
     else
-        std::cerr <<"Imposible d'ouvrir mon fichier.\n"<<std::endl;
-    
+        std::cerr <<"Imposible d'ouvrir le fichier image.\n"<<std::endl;
+
 }
 template<typename T>
 std::ostream& operator<< (std::ostream&  os ,const Image<T>& a )
 {
-    
     os<<a.mNumber<<std::endl
     <<a->width<<std::endl
     <<a.height<<std::endl
     <<a.data ;
-    
     return os;
 }
 
