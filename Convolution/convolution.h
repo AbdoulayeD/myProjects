@@ -14,8 +14,16 @@
 #include <algorithm>
 #include <iterator>
 #include <cmath>
+#include <mpi.h>
 #include  "image.h"
 
+struct infop{
+    int  rank;
+    int  nproc;
+    int ideb;
+    int ifin;
+    int nloc;
+};
 
 template<typename T>
 class Convolution
@@ -32,7 +40,8 @@ public:
     Convolution(Image<int> a, double fact, double bia);
     Convolution(Image<int> a, std::vector<T> kernelt);
     Convolution(Image<int> a, std::vector<T> kernelt, double fact, double bia);
-
+    Convolution(Image<int> a, std::vector<T> kernelt, struct infop pinfo);
+    Convolution(Image<int> a, std::vector<T> kernelt, double fact, double bia, struct infop pinfo);
     void save(std::string output);
     /*
     friend std::vector<T>  decalage(int n);
@@ -475,6 +484,74 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt, double fact , 
         std::cout<<std::endl;
     }*/
 
+}
+
+template<typename T>
+Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt, double fact , double bia,struct infop pinfo ):cible(a), factor(fact), bias(bia)
+{
+    int n;
+    int h=cible.geth();
+    int w=cible.getw();
+    int mv=cible.getmv();
+    int tag=20;
+    MPI_Status sta;
+    MPI_Request req;
+    MPI_Request treq[pinfo.nproc-1];
+    MPI_Status tsta[pinfo.nproc-1];
+    int nbreq=pinfo.nproc-1;
+
+    
+    
+    
+    n=kernelt.size();
+    nkernel=sqrt(n);
+    std::cout<<std::endl<<"---->Try test:"<<std::endl;
+    std::cout<<"Kernel:"<<nkernel<<std::endl;
+    for(int i=0;i<nkernel;i++){
+        for(int j=0;j<nkernel;j++)
+            std::cout<<kernelt[index(i,j,nkernel)]<<" ";
+        std::cout<<std::endl;
+        
+    }
+    std::cout<<"Bias:"<<bias<<std::endl;
+    std::cout<<"factor:"<<factor<<std::endl;
+    
+    std::cout<<"Image:"<<std::endl;
+    std::cout<<"w:"<<w<<std::endl;
+    std::cout<<"h:"<<h<<std::endl;
+    std::cout<<"mv:"<<mv<<std::endl;
+
+#pragma omp parallel for
+    for(int x = pinfo.ideb; x < pinfo.ifin /*h*/ ; x++)
+        for(int y= /*pinfo.ideb*/0; y < /*pinfo.ifin*/ w ; y++)
+        {
+            double newval=0;
+            for(int kx=-1;kx<2;kx++)
+                for(int ky=-1;ky<2;ky++)
+                {
+                    int imagex=(x+kx)%h;
+                    int imagey=(y+ky)%w;
+                    
+                    newval+=a(imagex,imagey)*kernelt[n/2 + kx + nkernel*ky];
+                }
+            newval=newval*factor +bias;
+            
+            if (newval<0.0) newval=0.0;
+            if (newval > mv) newval=mv;
+            cible(x,y)=static_cast<T>(newval);
+        }
+    
+    //MPI_Barrier(MPI_COMM_WORLD);
+    if (pinfo.rank > 0){
+        MPI_Isend(&cible(pinfo.ideb,0),pinfo.nloc*w,MPI_INT,0,tag,MPI_COMM_WORLD,&req);
+        MPI_Wait(&req,&sta);
+    }
+    if(pinfo.rank == 0){
+        for(int i=1;i<pinfo.nproc;i++)
+            MPI_Irecv(&cible(i*pinfo.nloc,0),pinfo.nloc*w,MPI_INT,i,tag,MPI_COMM_WORLD,&treq[i-1]);
+        MPI_Waitall(nbreq,treq,tsta);
+    }
+    
 }
 
 
