@@ -242,12 +242,12 @@ Convolution <T>::Convolution(Image<int> a, double fact, double bia): cible(a), f
     std::cout<<"w:"<<w<<std::endl;
     std::cout<<"h:"<<h<<std::endl;
     std::cout<<"mv:"<<mv<<std::endl;
-    for(int i=0;i<h;i++){
+    /*for(int i=0;i<h;i++){
         for(int j=0;j<w;j++)
             std::cout<<a(i,j)<<" ";
         std::cout<<std::endl;
 
-    }
+    }*/
     #pragma omp parallel for
     for(int x = 0; x < h ; x++)
         for(int y = 0; y < w; y++)
@@ -268,7 +268,7 @@ Convolution <T>::Convolution(Image<int> a, double fact, double bia): cible(a), f
             cible(x,y)=static_cast<T>(newval);
         }
 
-    std::cout<<std::endl<<"---->Try test 2:"<<std::endl;
+    /*std::cout<<std::endl<<"---->Try test 2:"<<std::endl;
     std::cout<<"Image:"<<std::endl;
     std::cout<<"w:"<<w<<std::endl;
     std::cout<<"h:"<<h<<std::endl;
@@ -277,7 +277,7 @@ Convolution <T>::Convolution(Image<int> a, double fact, double bia): cible(a), f
             std::cout<<cible(i,j)<<" ";
         std::cout<<std::endl;
     }
-
+*/
 }
 template<typename T>
 Convolution <T>::Convolution(Image<int> a): cible(a),nkernel(3),factor(1.0),bias(0.0)
@@ -306,12 +306,12 @@ Convolution <T>::Convolution(Image<int> a): cible(a),nkernel(3),factor(1.0),bias
     std::cout<<"w:"<<w<<std::endl;
     std::cout<<"h:"<<h<<std::endl;
     std::cout<<"mv:"<<mv<<std::endl;
-    for(int i=0;i<h;i++){
+    /*for(int i=0;i<h;i++){
         for(int j=0;j<w;j++)
             std::cout<<a(i,j)<<" ";
         std::cout<<std::endl;
 
-    }
+    }*/
     #pragma omp parallel for
     for(int x = 0; x < h ; x++)
         for(int y = 0; y < w; y++)
@@ -335,7 +335,7 @@ Convolution <T>::Convolution(Image<int> a): cible(a),nkernel(3),factor(1.0),bias
             cible(x,y)=static_cast<T>(newval);
         }
 
-    std::cout<<std::endl<<"---->Try test 2:"<<std::endl;
+    /*std::cout<<std::endl<<"---->Try test 2:"<<std::endl;
     std::cout<<"Image:"<<std::endl;
     std::cout<<"w:"<<w<<std::endl;
     std::cout<<"h:"<<h<<std::endl;
@@ -343,7 +343,7 @@ Convolution <T>::Convolution(Image<int> a): cible(a),nkernel(3),factor(1.0),bias
         for(int j=0;j<w;j++)
             std::cout<<cible(i,j)<<" ";
         std::cout<<std::endl;
-    }
+    }*/
 
 }
 
@@ -372,12 +372,12 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt):cible(a), fact
     std::cout<<"w:"<<w<<std::endl;
     std::cout<<"h:"<<h<<std::endl;
     std::cout<<"mv:"<<mv<<std::endl;
-    for(int i=0;i<h;i++){
+    /*for(int i=0;i<h;i++){
         for(int j=0;j<w;j++)
             std::cout<<a(i,j)<<" ";
         std::cout<<std::endl;
 
-    }
+    }*/
     #pragma omp parallel for
     for(int x = 0; x < h ; x++)
         for(int y = 0; y < w; y++)
@@ -400,7 +400,7 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt):cible(a), fact
             cible(x,y)=static_cast<T>(newval);
         }
 
-    std::cout<<std::endl<<"---->Try test 2:"<<std::endl;
+    /*std::cout<<std::endl<<"---->Try test 2:"<<std::endl;
     std::cout<<"Image:"<<std::endl;
     std::cout<<"w:"<<w<<std::endl;
     std::cout<<"h:"<<h<<std::endl;
@@ -408,8 +408,7 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt):cible(a), fact
         for(int j=0;j<w;j++)
             std::cout<<cible(i,j)<<" ";
         std::cout<<std::endl;
-    }
-
+    }*/
 }
 
 template<typename T>
@@ -436,12 +435,14 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt, double fact , 
     std::cout<<"w:"<<w<<std::endl;
     std::cout<<"h:"<<h<<std::endl;
     std::cout<<"mv:"<<mv<<std::endl;
+    /*
     for(int i=0;i<h;i++){
         for(int j=0;j<w;j++)
             std::cout<<a(i,j)<<" ";
         std::cout<<std::endl;
 
     }
+    */
     #pragma omp parallel for
     for(int x = 0; x < h ; x++)
         for(int y = 0; y < w; y++)
@@ -463,7 +464,8 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt, double fact , 
             if (newval > mv) newval=mv;
             cible(x,y)=static_cast<T>(newval);
         }
-    std::cout<<std::endl<<"---->Try test 2:"<<std::endl;
+
+    /*std::cout<<std::endl<<"---->Try test 2:"<<std::endl;
     std::cout<<"Image:"<<std::endl;
     std::cout<<"w:"<<w<<std::endl;
     std::cout<<"h:"<<h<<std::endl;
@@ -471,7 +473,7 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt, double fact , 
         for(int j=0;j<w;j++)
             std::cout<<cible(i,j)<<" ";
         std::cout<<std::endl;
-    }
+    }*/
 
 }
 

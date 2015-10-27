@@ -69,7 +69,7 @@ Image<T>::Image(std::string imgname)
         std::cout<<"Width:"<<width<<std::endl;
         std::cout<<"Height:"<<height<<std::endl;
         std::cout<<"Maxval:"<<maxval<<std::endl;
-        std::cout<< "data:\n"<<data<<std::endl;
+        //std::cout<< "data:\n"<<data<<std::endl;
         file.close();
     }
     else
