@@ -3,18 +3,20 @@ CEX=mpiexec
 RM=rm
 target=convolution
 main=main.cpp
-CFLAGS= -fopenmp -std=c++11 -o
+CFLAGS=  -std=c++11 -o
 output= convolution.log
 
-all:compile exec
+all: compile
 
 compile:
 	$(CC) $(CFLAGS) $(target).exe $(main)
 
-exec:
+par:
 	export OMP_NUM_THREADS=4
-	$(CEX) -n 8 ./$(target).exe > $(output)
-
+	$(CEX) -n 4 ./$(target).exe > $(output)
+seq:
+	export OMP_NUM_THREADS=4:
+	$(CEX) -n 1 ./$(target).exe > $(output)
 clean:
 	$(RM) *.exe
 	$(RM) output.pgm
