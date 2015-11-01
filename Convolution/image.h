@@ -46,7 +46,11 @@ protected:
     //std::vector<int> data;
 public:
     Image(std::string imgname);
-    int index(int i,int j){return i*width+j;}
+    int index(int i,int j){
+        int idv;
+        idv = (mNumber == "P2")? i*width+j : i*width*3+j;
+        return idv;
+    }
     friend std::istream& operator>> (std::istream&  is , Image<T>& a);
     friend std::ostream& operator<< (std::ostream&  os , const Image<T>& a);
     int geth()const{return height;}

@@ -3,7 +3,7 @@ CEX=mpiexec
 RM=rm
 target=convolution
 main=main.cpp
-CFLAGS=  -std=c++11 -o
+CFLAGS= -fopenmp -std=c++11 -o
 output= convolution.log
 
 all: compile
@@ -19,6 +19,7 @@ seq:
 	$(CEX) -n 1 ./$(target).exe > $(output)
 clean:
 	$(RM) *.exe
+	$(RM) output.ppm
 	$(RM) output.pgm
 	$(RM) *.log
 
