@@ -50,6 +50,7 @@ public:
         int idv;
         idv = (mNumber == "P2")? i*width+j : i*width*3+j;
         return idv;
+        //return i*width*3+j;
     }
     friend std::istream& operator>> (std::istream&  is , Image<T>& a);
     friend std::ostream& operator<< (std::ostream&  os , const Image<T>& a);
@@ -58,6 +59,7 @@ public:
     int getmv()const{return maxval;}
     std::string getmn()const{return mNumber;}
     T& operator()(int i,int j){ return data[index(i,j)]; }
+    T operator()(int a,int b)const{ return data[index(a,b)];}
 };
 
 template<typename T>

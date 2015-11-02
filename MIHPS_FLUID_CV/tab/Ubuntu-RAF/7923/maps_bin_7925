@@ -1,0 +1,22 @@
+00400000-00403000 r-xp 00000000 08:04 948945                             /home/diaraf/Documents/myProjects/MIHPS_FLUID_CV/test
+00602000-00603000 r--p 00002000 08:04 948945                             /home/diaraf/Documents/myProjects/MIHPS_FLUID_CV/test
+00603000-00604000 rw-p 00003000 08:04 948945                             /home/diaraf/Documents/myProjects/MIHPS_FLUID_CV/test
+00e99000-00eba000 rw-p 00000000 00:00 0                                  [heap]
+7fc31c17b000-7fc31c336000 r-xp 00000000 08:04 804143                     /lib/x86_64-linux-gnu/libc-2.19.so
+7fc31c336000-7fc31c535000 ---p 001bb000 08:04 804143                     /lib/x86_64-linux-gnu/libc-2.19.so
+7fc31c535000-7fc31c539000 r--p 001ba000 08:04 804143                     /lib/x86_64-linux-gnu/libc-2.19.so
+7fc31c539000-7fc31c53b000 rw-p 001be000 08:04 804143                     /lib/x86_64-linux-gnu/libc-2.19.so
+7fc31c53b000-7fc31c540000 rw-p 00000000 00:00 0 
+7fc31c540000-7fc31c645000 r-xp 00000000 08:04 804128                     /lib/x86_64-linux-gnu/libm-2.19.so
+7fc31c645000-7fc31c844000 ---p 00105000 08:04 804128                     /lib/x86_64-linux-gnu/libm-2.19.so
+7fc31c844000-7fc31c845000 r--p 00104000 08:04 804128                     /lib/x86_64-linux-gnu/libm-2.19.so
+7fc31c845000-7fc31c846000 rw-p 00105000 08:04 804128                     /lib/x86_64-linux-gnu/libm-2.19.so
+7fc31c846000-7fc31c869000 r-xp 00000000 08:04 804140                     /lib/x86_64-linux-gnu/ld-2.19.so
+7fc31ca40000-7fc31ca43000 rw-p 00000000 00:00 0 
+7fc31ca65000-7fc31ca68000 rw-p 00000000 00:00 0 
+7fc31ca68000-7fc31ca69000 r--p 00022000 08:04 804140                     /lib/x86_64-linux-gnu/ld-2.19.so
+7fc31ca69000-7fc31ca6a000 rw-p 00023000 08:04 804140                     /lib/x86_64-linux-gnu/ld-2.19.so
+7fc31ca6a000-7fc31ca6b000 rw-p 00000000 00:00 0 
+7fff8d773000-7fff8d794000 rw-p 00000000 00:00 0                          [stack]
+7fff8d797000-7fff8d799000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]

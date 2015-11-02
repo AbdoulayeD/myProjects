@@ -257,16 +257,16 @@ Convolution <T>::Convolution(Image<int> a, double fact, double bia): cible(a), f
             for(int kx=-1;kx<2;kx++)
             for(int ky=-1;ky<2;ky++)
             {
-                int imagex=(x+kx)%h;
-                int imagey=(y+ky)%w;
+                int imagex=(x+kx+1)%h;
+                int imagey=(y+ky+1)%w;
 
-                newval+=a(imagex,imagey)*kernel[n/2 + kx + nkernel*ky];
+                newval+=a(imagex,imagey)*kernel[n/2 + (kx+1) + nkernel*(ky+1)];
             }
             newval=newval*factor +bias;
-
-            if (newval<0.0) newval=0.0;
+            if (newval< 0.0) newval= -1*newval;
+            //if (newval<0.0) newval=0.0;
             if (newval > mv) newval=mv;
-            cible(x,y)=static_cast<T>(newval);
+            cible(x,y)=static_cast<int>(newval);
         }
 
 }
@@ -300,15 +300,16 @@ Convolution <T>::Convolution(Image<int> a): cible(a),nkernel(3),factor(1.0),bias
             for(int kx=-1;kx<2;kx++)
             for(int ky=-1;ky<2;ky++)
             {
-                int imagex=(x+kx)%h;
-                int imagey=(y+ky)%w;
+                int imagex=(x+kx+1)%h;
+                int imagey=(y+ky+1)%w;
 
-                newval+=a(imagex,imagey)*kernel[n/2 + kx + nkernel*ky];
+                newval+=a(imagex,imagey)*kernel[n/2 + (kx+1) + nkernel*(ky+1)];
             }
             newval=newval*factor +bias;
-            if (newval<0.0) newval=0.0;
+            if (newval< 0.0) newval= -1*newval;
+            //if (newval<0.0) newval=0.0;
             if (newval > mv) newval=mv;
-            cible(x,y)=static_cast<T>(newval);
+            cible(x,y)=static_cast<int>(newval);
         }
 }
 
@@ -333,7 +334,7 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt):cible(a), fact
 
     int h =cible.geth();
     int w = (cible.getmn()=="P3") ? cible.getw()*3 : cible.getw();
-    
+
     #pragma omp parallel for
     for(int x = 0; x < h ; x++)
         for(int y = 0; y < w; y++)
@@ -342,15 +343,17 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt):cible(a), fact
             for(int kx=-1;kx<2;kx++)
             for(int ky=-1;ky<2;ky++)
             {
-                int imagex=(x+kx)%h;
-                int imagey=(y+ky)%w;
+                int imagex=(x+kx+1)%h;
+                int imagey=(y+ky+1)%w;
 
-                newval+=a(imagex,imagey)*kernelt[n/2 + kx + nkernel*ky];
+                newval+=a(imagex,imagey)*kernelt[n/2 + (kx+1) + nkernel*(ky+1)];
             }
             newval=newval*factor +bias;
-              if (newval<0.0) newval=0.0;
+
+            if (newval< 0.0) newval= -1*newval;
+            //if (newval<0.0) newval=0.0;
             if (newval > mv) newval=mv;
-            cible(x,y)=static_cast<T>(newval);
+            cible(x,y)=static_cast<int>(newval);
         }
 
 }
@@ -362,6 +365,7 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt, double fact , 
     int mv=cible.getmv();
     n=kernelt.size();
     nkernel=sqrt(n);
+
     std::cout<<"Kernel:"<<nkernel<<std::endl;
     for(int i=0;i<nkernel;i++){
         for(int j=0;j<nkernel;j++)
@@ -374,29 +378,32 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt, double fact , 
 
     int h =cible.geth();
     int w = (cible.getmn()=="P3") ? cible.getw()*3 : cible.getw();
-  
+    //int w= cible.getw()*3;
+    std::cout<<"Starting convolution"<<std::endl;
+    std::cout<<"h:"<<h<<std::endl;
+    std::cout<<"w:"<<w<<std::endl;
     #pragma omp parallel for
     for(int x = 0; x < h ; x++)
         for(int y = 0; y < w; y++)
         {
-            double newval=0;
-            
+            double newval=0.0;
             for(int kx=-1;kx<2;kx++)
             for(int ky=-1;ky<2;ky++)
             {
-                int imagex=(x+kx)%h;
-                int imagey=(y+ky)%w;
+                int imagex=(x+kx+1)%h;
+                int imagey=(y+ky+1)%w;
+            newval += a( imagex, imagey ) * kernelt[ n/2 + (kx+1) + nkernel*(ky+1) ];
 
-                newval+=a(imagex,imagey)*kernelt[n/2 + kx + nkernel*ky];
-    
             }
-            newval=newval*factor +bias;
+            newval=factor*newval +bias;
 
-            if (newval<0.0) newval=0.0;
-            if (newval > mv) newval=mv;
-            cible(x,y)=static_cast<T>(newval);
-      
+            if (newval< 0.0) newval= -1*newval;
+            //if (newval < 0.0) newval= 0.0;
+            if (newval > mv) newval= mv;
+            cible(x,y)=static_cast<int>(newval);
         }
+
+        std::cout<<"Convolution end"<<std::endl;
 
 }
 
@@ -413,40 +420,46 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt, double fact , 
     int nbreq=pinfo.nproc-1;
 
     n=kernelt.size();
-    
+
     nkernel=sqrt(n);
     std::cout<<"Kernel:"<<nkernel<<std::endl;
     for(int i=0;i<nkernel;i++){
         for(int j=0;j<nkernel;j++)
             std::cout<<kernelt[index(i,j,nkernel)]<<" ";
         std::cout<<std::endl;
-        
+
     }
     std::cout<<"Bias:"<<bias<<std::endl;
     std::cout<<"factor:"<<factor<<std::endl;
-    
-    
+
+
     int h =cible.geth();
     int w = (cible.getmn()=="P3") ? cible.getw()*3 : cible.getw();
-    
-#pragma omp parallel for
-    for(int x = pinfo.ideb; x < pinfo.ifin ; x++)
-        for(int y= 0; y < w ; y++)
+    //int w= cible.getw()*3;
+    std::cout<<"Starting convolution"<<std::endl;
+    std::cout<<"w:"<<w<<std::endl;
+    std::cout<<"h:"<<h<<std::endl;
+    MPI_Barrier(MPI_COMM_WORLD);
+    #pragma omp parallel for
+    for(int x = pinfo.ideb; x < pinfo.ifin; x++)
+        for(int y = 0; y < w; y++)
         {
             double newval=0;
             for(int kx=-1;kx<2;kx++)
                 for(int ky=-1;ky<2;ky++)
                 {
-                    int imagex=(x+kx)%h;
-                    int imagey=(y+ky)%w;
-                    
-                    newval+=a(imagex,imagey)*kernelt[n/2 + kx + nkernel*ky];
+
+                int imagex=(x+kx+1)%h;
+                int imagey=(y+ky+1)%w;
+                newval+=a(imagex,imagey)*kernelt[n/2 + (kx+1) + nkernel*(ky+1)];
                 }
-            newval=newval*factor +bias;
-            
-            if (newval<0.0) newval=0.0;
+                newval=factor*newval + bias;
+
+            if (newval< 0.0) newval= -1*newval;
+            //if (newval< 0.0) newval= 0.0;
+
             if (newval > mv) newval=mv;
-            cible(x,y)=static_cast<T>(newval);
+            cible(x,y)=static_cast<int>(newval);
         }
     if (pinfo.rank > 0){
         MPI_Isend(&cible(pinfo.ideb,0),pinfo.nloc*w,MPI_INT,0,tag,MPI_COMM_WORLD,&req);
@@ -457,7 +470,7 @@ Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt, double fact , 
             MPI_Irecv(&cible(i*pinfo.nloc,0),pinfo.nloc*w,MPI_INT,i,tag,MPI_COMM_WORLD,&treq[i-1]);
         MPI_Waitall(nbreq,treq,tsta);
     }
-    
+    std::cout<<"Convolution done"<<std::endl;
 }
 
 

@@ -1,0 +1,879 @@
+meta_infos =
+{
+	["BIN"]=
+	(function () return{
+		["FUNCTIONS"]=
+		(function () return {
+			[1]=
+			(function () return {
+				["name"]="_init";
+				["start"]={4196384,};
+				["stop"]={4196409,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[2]=
+			(function () return {
+				["name"]="main";
+				["start"]={4196688,};
+				["stop"]={4197595,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[3]=
+			(function () return {
+				["name"]="_start";
+				["start"]={4197600,};
+				["stop"]={4197642,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[4]=
+			(function () return {
+				["name"]="deregister_tm_clones";
+				["start"]={4197648,};
+				["stop"]={4197689,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[5]=
+			(function () return {
+				["name"]="register_tm_clones";
+				["start"]={4197696,};
+				["stop"]={4197753,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[6]=
+			(function () return {
+				["name"]="__do_global_dtors_aux";
+				["start"]={4197760,};
+				["stop"]={4197788,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[7]=
+			(function () return {
+				["name"]="frame_dummy";
+				["start"]={4197792,};
+				["stop"]={4197837,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[8]=
+			(function () return {
+				["name"]="init_array";
+				["start"]={4197840,};
+				["stop"]={4197903,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[9]=
+			(function () return {
+				["name"]="print_array";
+				["start"]={4197904,};
+				["stop"]={4198043,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[10]=
+			(function () return {
+				["name"]="rdtsc";
+				["start"]={4198048,};
+				["stop"]={4198061,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[11]=
+			(function () return {
+				["name"]="build_index";
+				["start"]={4198064,};
+				["stop"]={4198074,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[12]=
+			(function () return {
+				["name"]="swap";
+				["start"]={4198080,};
+				["stop"]={4198126,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[13]=
+			(function () return {
+				["name"]="addSource";
+				["start"]={4198128,};
+				["stop"]={4198173,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[14]=
+			(function () return {
+				["name"]="setBoundry";
+				["start"]={4198176,};
+				["stop"]={4198565,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[15]=
+			(function () return {
+				["name"]="linearSolver";
+				["start"]={4198576,};
+				["stop"]={4198877,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[16]=
+			(function () return {
+				["name"]="diffuse";
+				["start"]={4198880,};
+				["stop"]={4198924,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[17]=
+			(function () return {
+				["name"]="calculate_curl";
+				["start"]={4198928,};
+				["stop"]={4199017,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[18]=
+			(function () return {
+				["name"]="buoyancy";
+				["start"]={4199024,};
+				["stop"]={4199258,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[19]=
+			(function () return {
+				["name"]="advect";
+				["start"]={4199264,};
+				["stop"]={4199807,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[20]=
+			(function () return {
+				["name"]="vorticityConfinement";
+				["start"]={4199808,};
+				["stop"]={4200491,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[21]=
+			(function () return {
+				["name"]="project";
+				["start"]={4200496,};
+				["stop"]={4201166,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[22]=
+			(function () return {
+				["name"]="c_densitySolver";
+				["start"]={4201168,};
+				["stop"]={4201475,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[23]=
+			(function () return {
+				["name"]="c_velocitySolver";
+				["start"]={4201488,};
+				["stop"]={4202477,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[24]=
+			(function () return {
+				["name"]="__libc_csu_init";
+				["start"]={4202480,};
+				["stop"]={4202581,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[25]=
+			(function () return {
+				["name"]="__libc_csu_fini";
+				["start"]={4202592,};
+				["stop"]={4202592,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[26]=
+			(function () return {
+				["name"]="_fini";
+				["start"]={4202596,};
+				["stop"]={4202604,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[27]=
+			(function () return {
+				["name"]="sqrtf@plt";
+				["start"]={4196608,};
+				["stop"]={4196608,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[28]=
+			(function () return {
+				["name"]="abs@plt";
+				["start"]={4196480,};
+				["stop"]={4196480,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[29]=
+			(function () return {
+				["name"]="_IO_putc@plt";
+				["start"]={4196512,};
+				["stop"]={4196512,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[30]=
+			(function () return {
+				["name"]="fclose@plt";
+				["start"]={4196496,};
+				["stop"]={4196496,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[31]=
+			(function () return {
+				["name"]="fopen@plt";
+				["start"]={4196640,};
+				["stop"]={4196640,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[32]=
+			(function () return {
+				["name"]="rand@plt";
+				["start"]={4196672,};
+				["stop"]={4196672,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[33]=
+			(function () return {
+				["name"]="__libc_start_main@plt";
+				["start"]={4196528,};
+				["stop"]={4196528,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[34]=
+			(function () return {
+				["name"]="abort@plt";
+				["start"]={4196448,};
+				["stop"]={4196448,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[35]=
+			(function () return {
+				["name"]="__fprintf_chk@plt";
+				["start"]={4196656,};
+				["stop"]={4196656,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[36]=
+			(function () return {
+				["name"]="free@plt";
+				["start"]={4196432,};
+				["stop"]={4196432,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[37]=
+			(function () return {
+				["name"]="__printf_chk@plt";
+				["start"]={4196624,};
+				["stop"]={4196624,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[38]=
+			(function () return {
+				["name"]="puts@plt";
+				["start"]={4196464,};
+				["stop"]={4196464,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[39]=
+			(function () return {
+				["name"]="srand@plt";
+				["start"]={4196544,};
+				["stop"]={4196544,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[40]=
+			(function () return {
+				["name"]="calloc@plt";
+				["start"]={4196560,};
+				["stop"]={4196560,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[41]=
+			(function () return {
+				["name"]="strtol@plt";
+				["start"]={4196592,};
+				["stop"]={4196592,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+			[42]=
+			(function () return {
+				["name"]="__gmon_start__@plt";
+				["start"]={4196576,};
+				["stop"]={4196576,};
+				["src_file"]="-1";
+				["src_line"]=0;
+				["inlined"]=0;
+			}end)(),
+		}end)(),
+
+		["LOOPS"]=
+		(function () return {
+			[1]=
+			(function () return {
+				["start"]={4197864,};
+				["stop"]={4197893,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="init_array";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[2]=
+			(function () return {
+				["start"]={4197952,};
+				["stop"]={4198017,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="print_array";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[3]=
+			(function () return {
+				["start"]={4198096,};
+				["stop"]={4198122,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="swap";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[4]=
+			(function () return {
+				["start"]={4198144,};
+				["stop"]={4198169,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="addSource";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[5]=
+			(function () return {
+				["start"]={4198272,4198368,};
+				["stop"]={4198356,4198405,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="setBoundry";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[6]=
+			(function () return {
+				["start"]={4198674,4198810,};
+				["stop"]={4198701,4198856,};
+				["children"]={
+					[8]={"1"};};
+				["src_file"]="-1";
+				["func_name"]="linearSolver";
+				["src_line_start"]=-1;
+				["level"]="Outermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[7]=
+			(function () return {
+				["start"]={4198736,};
+				["stop"]={4198787,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="linearSolver";
+				["src_line_start"]=-1;
+				["level"]="Innermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[8]=
+			(function () return {
+				["start"]={4198704,4198789,};
+				["stop"]={4198734,4198808,};
+				["children"]={
+					[7]={"1"};};
+				["src_file"]="-1";
+				["func_name"]="linearSolver";
+				["src_line_start"]=-1;
+				["level"]="InBetween";
+				["src_line_end"]=-1;
+			}end)(),
+			[9]=
+			(function () return {
+				["start"]={4199088,};
+				["stop"]={4199101,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="buoyancy";
+				["src_line_start"]=-1;
+				["level"]="Innermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[10]=
+			(function () return {
+				["start"]={4199072,4199103,};
+				["stop"]={4199080,4199114,};
+				["children"]={
+					[9]={"1"};};
+				["src_file"]="-1";
+				["func_name"]="buoyancy";
+				["src_line_start"]=-1;
+				["level"]="Outermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[11]=
+			(function () return {
+				["start"]={4199200,};
+				["stop"]={4199238,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="buoyancy";
+				["src_line_start"]=-1;
+				["level"]="Innermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[12]=
+			(function () return {
+				["start"]={4199184,4199240,};
+				["stop"]={4199199,4199247,};
+				["children"]={
+					[11]={"1"};};
+				["src_file"]="-1";
+				["func_name"]="buoyancy";
+				["src_line_start"]=-1;
+				["level"]="Outermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[13]=
+			(function () return {
+				["start"]={4199408,4199760,};
+				["stop"]={4199449,4199773,};
+				["children"]={
+					[14]={"1"};};
+				["src_file"]="-1";
+				["func_name"]="advect";
+				["src_line_start"]=-1;
+				["level"]="Outermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[14]=
+			(function () return {
+				["start"]={4199456,4199736,};
+				["stop"]={4199724,4199751,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="advect";
+				["src_line_start"]=-1;
+				["level"]="Innermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[15]=
+			(function () return {
+				["start"]={4199944,};
+				["stop"]={4199996,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="vorticityConfinement";
+				["src_line_start"]=-1;
+				["level"]="Innermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[16]=
+			(function () return {
+				["start"]={4199920,4199998,};
+				["stop"]={4199939,4200019,};
+				["children"]={
+					[15]={"1"};};
+				["src_file"]="-1";
+				["func_name"]="vorticityConfinement";
+				["src_line_start"]=-1;
+				["level"]="Outermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[17]=
+			(function () return {
+				["start"]={4200192,4200446,};
+				["stop"]={4200387,4200486,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="vorticityConfinement";
+				["src_line_start"]=-1;
+				["level"]="Innermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[18]=
+			(function () return {
+				["start"]={4200160,4200393,};
+				["stop"]={4200187,4200425,};
+				["children"]={
+					[17]={"1"};};
+				["src_file"]="-1";
+				["func_name"]="vorticityConfinement";
+				["src_line_start"]=-1;
+				["level"]="Outermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[19]=
+			(function () return {
+				["start"]={4200688,};
+				["stop"]={4200742,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="project";
+				["src_line_start"]=-1;
+				["level"]="Innermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[20]=
+			(function () return {
+				["start"]={4200664,4200744,};
+				["stop"]={4200683,4200751,};
+				["children"]={
+					[19]={"1"};};
+				["src_file"]="-1";
+				["func_name"]="project";
+				["src_line_start"]=-1;
+				["level"]="Outermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[21]=
+			(function () return {
+				["start"]={4200952,};
+				["stop"]={4201018,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="project";
+				["src_line_start"]=-1;
+				["level"]="Innermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[22]=
+			(function () return {
+				["start"]={4200928,4201020,};
+				["stop"]={4200946,4201027,};
+				["children"]={
+					[21]={"1"};};
+				["src_file"]="-1";
+				["func_name"]="project";
+				["src_line_start"]=-1;
+				["level"]="Outermost";
+				["src_line_end"]=-1;
+			}end)(),
+			[23]=
+			(function () return {
+				["start"]={4201216,};
+				["stop"]={4201243,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_densitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[24]=
+			(function () return {
+				["start"]={4201248,};
+				["stop"]={4201277,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_densitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[25]=
+			(function () return {
+				["start"]={4201312,};
+				["stop"]={4201341,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_densitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[26]=
+			(function () return {
+				["start"]={4201376,};
+				["stop"]={4201391,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_densitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[27]=
+			(function () return {
+				["start"]={4201552,};
+				["stop"]={4201582,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_velocitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[28]=
+			(function () return {
+				["start"]={4201592,};
+				["stop"]={4201618,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_velocitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[29]=
+			(function () return {
+				["start"]={4201664,};
+				["stop"]={4201694,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_velocitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[30]=
+			(function () return {
+				["start"]={4201704,};
+				["stop"]={4201730,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_velocitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[31]=
+			(function () return {
+				["start"]={4201768,};
+				["stop"]={4201794,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_velocitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[32]=
+			(function () return {
+				["start"]={4201808,};
+				["stop"]={4201840,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_velocitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[33]=
+			(function () return {
+				["start"]={4201888,};
+				["stop"]={4201916,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_velocitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[34]=
+			(function () return {
+				["start"]={4202000,};
+				["stop"]={4202032,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_velocitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[35]=
+			(function () return {
+				["start"]={4202040,};
+				["stop"]={4202068,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_velocitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[36]=
+			(function () return {
+				["start"]={4202176,};
+				["stop"]={4202198,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="c_velocitySolver";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[37]=
+			(function () return {
+				["start"]={4202544,};
+				["stop"]={4202564,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="__libc_csu_init";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			[0]=
+			(function () return {
+				["start"]={4197072,};
+				["stop"]={4197220,};
+				["children"]={};
+				["src_file"]="-1";
+				["func_name"]="main";
+				["src_line_start"]=-1;
+				["level"]="Single";
+				["src_line_end"]=-1;
+			}end)(),
+			} end)(),
+
+		["OUTERMOST_LOOPS"]=
+		(function () return {
+			["vorticityConfinement"]={
+					[16]={};
+					[18]={};
+			};
+			["swap"]={
+					[3]={};
+			};
+			["init_array"]={
+					[1]={};
+			};
+			["linearSolver"]={
+					[6]={};
+			};
+			["c_densitySolver"]={
+					[24]={};
+					[25]={};
+					[23]={};
+					[26]={};
+			};
+			["setBoundry"]={
+					[5]={};
+			};
+			["c_velocitySolver"]={
+					[33]={};
+					[35]={};
+					[27]={};
+					[28]={};
+					[29]={};
+					[30]={};
+					[31]={};
+					[32]={};
+					[34]={};
+					[36]={};
+			};
+			["__libc_csu_init"]={
+					[37]={};
+			};
+			["main"]={
+					[0]={};
+			};
+			["print_array"]={
+					[2]={};
+			};
+			["project"]={
+					[20]={};
+					[22]={};
+			};
+			["buoyancy"]={
+					[10]={};
+					[12]={};
+			};
+			["advect"]={
+					[13]={};
+			};
+			["addSource"]={
+					[4]={};
+			};
+			}end)(),
+	}end)()
+};
