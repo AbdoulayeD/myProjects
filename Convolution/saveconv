@@ -1,0 +1,99 @@
+template<typename T>
+Convolution <T>::Convolution(Image<int> a,std::vector<T> kernelt, double fact , double bia):cible(a), factor(fact), bias(bia)
+{
+    int n;
+    int mv=cible.getmv();
+    n=kernelt.size();
+
+    nkernel=sqrt(n);
+
+    std::cout<<"Kernel:"<<nkernel<<std::endl;
+    for(int i=0;i<nkernel;i++){
+        for(int j=0;j<nkernel;j++)
+            std::cout<<kernelt[index(i,j,nkernel)]<<" ";
+        std::cout<<std::endl;
+
+    }
+    std::cout<<"Bias:"<<bias<<std::endl;
+    std::cout<<"factor:"<<factor<<std::endl;
+    std::cout<<"n:"<<n<<std::endl;
+    std::cout<<"nkernel:"<<nkernel<<std::endl;
+
+    int h =cible.geth();
+    int w = (cible.getmn()=="P3") ? cible.getw()*3 : cible.getw();
+    //int w= cible.getw()*3;
+    std::cout<<"Starting convolution"<<std::endl;
+    std::cout<<"h:"<<h<<std::endl;
+    std::cout<<"w:"<<w<<std::endl;
+
+
+    #pragma omp parallel for
+
+
+        for(int x = 0; x< w; x+=3)
+        for(int y = 0; y < h ; y++)
+        {
+           double nr=0.0;
+           double ng=0.0;
+           double nb=0.0;
+           /*
+           newval = a(x,y)*kernelt[4]+a(x-1,y)*kernelt[3]+a(x+1,y)*kernelt[5]
+                   +a(x,y-1)*kernelt[1]+a(x,y+1)*kernelt[7]
+                   +a(x-1,y-1)*kernelt[0]+a(x+1,y+1)*kernelt[8]
+                   +a(x-1,y+1)*kernelt[6]+a(x+1,y-1)*kernelt[2];
+            */
+
+            //for(int kx=-1;kx<nkernel-1;kx++)
+            //for(int ky=-1;ky<nkernel-1;ky++)
+            for(int kx=0;kx<nkernel;kx++)
+            for(int ky=0;ky<nkernel;ky++)
+            {
+                int imagexr = (x - nkernel / 2 + kx + w)%w;
+                int imageyr = (y - nkernel / 2 + ky + h)%h;
+
+                int imagexg= ( x+1 - nkernel / 2 + kx + w)%w;
+                int imageyg = (y - nkernel / 2 + ky + h)%h;
+
+                int imagexb = (x+2 - nkernel / 2 + kx + w)%w;
+                int imageyb = (y - nkernel / 2 + ky + h)%h;
+
+                /*
+                int imagexr=(x+kx);
+                int imageyr=(y+ky);
+
+                int imagexb=(x+kx);
+                int imageyb=(y+1+ky);
+
+                int imagexg=(x+kx);
+                int imageyg=(y+2+ky);
+                */
+
+                nr+=a(imageyr,imagexr)*kernelt[ index(kx,ky,nkernel)/*n/2 + kx + nkernel*ky*/ ];
+                nb+=a(imageyg,imagexg)*kernelt[ index(kx,ky,nkernel)/*n/2 + kx + nkernel*ky*/ ];
+                ng+=a(imageyb,imagexb)*kernelt[ index(kx,ky,nkernel)/*n/2 + kx + nkernel*ky*/];
+
+            }
+
+            nr=factor*nr +bias;
+            nb=factor*ng +bias;
+            ng=factor*nb +bias;
+
+            //if (newval< 0.0) newval= -1*newval;
+            if (nr < 0.0) nr= 0.0;
+            if (nr > mv) nr= mv;
+            cible(y,x)=static_cast<T>( nr);
+
+            if (ng < 0.0) ng = 0.0;
+            if (ng > mv) ng  = mv;
+            cible(y,x+1)=static_cast<T>( ng );
+
+            if (nb < 0.0) nb = 0.0;
+            if (nb > mv) nb  = mv;
+            cible(y,x+2)=static_cast<int>( nb );
+            //cible(x,y)=newval;
+
+        }
+
+        std::cout<<"Convolution end"<<std::endl;
+
+}

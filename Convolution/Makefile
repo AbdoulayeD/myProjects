@@ -3,7 +3,7 @@ CEX=mpiexec
 RM=rm
 target=convolution
 main=main.cpp
-CFLAGS= -fopenmp -std=c++11 -o
+CFLAGS=-fopenmp -g -std=c++11 -o
 output= convolution.log
 
 all: compile

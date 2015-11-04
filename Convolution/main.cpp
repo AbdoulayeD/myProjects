@@ -23,23 +23,25 @@ int main(int argc, char ** argv) {
     std::string extention=".ppm";
     std::string outputfile =outputFilename+extention;
     //Chargement Image
-    Image<int> img("bc-sign.ppm");
+    Image<int> img("photo3.ppm");
        if(nrank==0){
         std::cout<<"Image width : "<<img.getw()<<std::endl;
         std::cout<<"Image height : "<<img.geth()<<std::endl;
     }
-
+    struct infop infopip;
+    infopip.rank  = nrank;
+    infopip.nproc = nproc;
     //Convolution
-    double fact=1.0/3.0;
+    double fact=1.0;
     double bia=0.0;
 
     if(nproc>1)
     {
         Q = img.geth()/nproc;
         R = img.geth()%nproc;
-        struct infop infopip;
-        infopip.rank  = nrank;
-        infopip.nproc = nproc;
+        //struct infop infopip;
+        //infopip.rank  = nrank;
+
 
         if (infopip.rank < R) {
 
@@ -53,17 +55,17 @@ int main(int argc, char ** argv) {
             infopip.ideb = R * (Q+1) + (infopip.rank - R) * Q;
             infopip.ifin = infopip.ideb + infopip.nloc;
         }
-        Convolution<float> convol(img,sharpen<float>(3),fact,bia,infopip);
-        if(nrank == 0)
-            convol.save(outputfile);
+        Convolution<float> convol(img,edges<float>(3),fact,bia,infopip);
+
+       convol.save(outputfile,infopip);
     }
     else
     {
     //Convolution<int> convol(img);
     //Convolution<float> convol(img,fact, bia);
     //Convolution<int> convol(img,edges<int>(9));
-        Convolution<float> convol(img,sharpen<float>(3),fact,bia);
-        convol.save(outputfile);
+        Convolution<float> convol(img,edges<float>(3),fact,bia);
+        convol.save(outputfile,infopip);
     }
 
     MPI_Finalize();

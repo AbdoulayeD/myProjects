@@ -1,12 +1,19 @@
-Magic Number:P2
-Width:475
-Height:460
+Magic Number:P3
+Width:320
+Height:240
 Maxval:255
-Image width : 475
-Image height : 460
+Image width : 320
+Image height : 240
 Kernel:3
--1 -1 -1 
--1 9 -1 
--1 -1 -1 
+1 1 1 
+1 -7 1 
+1 1 1 
+mv:255
 Bias:0
 factor:1
+n:9
+nkernel:3
+Starting convolution
+h:240
+w:960
+Convolution end
