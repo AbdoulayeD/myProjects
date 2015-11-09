@@ -20,20 +20,21 @@ int main(int argc, char ** argv) {
     MPI_Comm_rank(MPI_COMM_WORLD,&nrank);
     MPI_Comm_size(MPI_COMM_WORLD,&nproc);
     std::string outputFilename="output";
-    std::string extention=".ppm";
+    std::string extention=".pgm";
     std::string outputfile =outputFilename+extention;
     //Chargement Image
-    Image<int> img("photo3.ppm");
+    Image<int> img("lena.ascii.pgm");
        if(nrank==0){
         std::cout<<"Image width : "<<img.getw()<<std::endl;
         std::cout<<"Image height : "<<img.geth()<<std::endl;
     }
-    struct infop infopip;
+    
+     struct infop infopip;
     infopip.rank  = nrank;
     infopip.nproc = nproc;
     //Convolution
-    double fact=1.0;
-    double bia=0.0;
+    //double fact=1.0;
+    //double bia=0.0;
 
     if(nproc>1)
     {
@@ -55,8 +56,8 @@ int main(int argc, char ** argv) {
             infopip.ideb = R * (Q+1) + (infopip.rank - R) * Q;
             infopip.ifin = infopip.ideb + infopip.nloc;
         }
-        Convolution<float> convol(img,edges<float>(3),fact,bia,infopip);
-
+        //Convolution<float> convol(img,edges<float>(3),fact,bia,infopip);
+        Convolution<float> convol(img,blur<float>(2),infopip);
        convol.save(outputfile,infopip);
     }
     else
@@ -64,10 +65,11 @@ int main(int argc, char ** argv) {
     //Convolution<int> convol(img);
     //Convolution<float> convol(img,fact, bia);
     //Convolution<int> convol(img,edges<int>(9));
-        Convolution<float> convol(img,edges<float>(3),fact,bia);
+        Convolution<float> convol(img,motionblur<float>());
         convol.save(outputfile,infopip);
     }
 
     MPI_Finalize();
+    
     return 0;
 }

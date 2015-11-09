@@ -15,6 +15,13 @@
 #include <algorithm>
 #include <iterator>
 
+struct pixel
+{
+    int r;
+    int g;
+    int b;
+};
+
 namespace std{
 
     template<typename T>
