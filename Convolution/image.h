@@ -78,10 +78,12 @@ Image<T>::Image(std::string imgname)
     {
         file >>mNumber>>width>>height>>maxval;
         file >>data;
+        /*
         std::cout<<"Magic Number:"<<mNumber<<std::endl;
         std::cout<<"Width:"<<width<<std::endl;
         std::cout<<"Height:"<<height<<std::endl;
         std::cout<<"Maxval:"<<maxval<<std::endl;
+        */
         //std::cout<< "data:\n"<<data<<std::endl;
         file.close();
     }
