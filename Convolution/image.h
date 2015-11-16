@@ -78,6 +78,18 @@ Image<T>::Image(std::string imgname)
     {
         file >>mNumber>>width>>height>>maxval;
         file >>data;
+        if (mNumber == "P3"){
+            if (data.size()!=width*3*height)
+                std::cerr <<"Imposible d'ouvrir le fichier image, il ne respecte pas les bornes.\n"<<std::endl;
+        }
+        else
+        {
+        if (data.size()!=width*height)
+                std::cerr <<"Imposible d'ouvrir le fichier image, il ne respecte pas les bornes.\n"<<std::endl;
+        }
+
+
+
         /*
         std::cout<<"Magic Number:"<<mNumber<<std::endl;
         std::cout<<"Width:"<<width<<std::endl;

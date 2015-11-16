@@ -8,65 +8,124 @@
 
 //typedef convolType int;
 #include <iostream>
+#include <omp.h>
 #include "convolution.h"
+#define rep 10
 //#include <mpi.h>
 
 int main(int argc, char ** argv)
 {
-    //Initialisation
+    //Initialisation MPI
     MPI_Init(&argc,&argv);
     int nrank;
     int nproc;
+    int nthread;
     int  Q, R;
+    double t0=0.0,t1=0.0,dt=0.0;
     MPI_Comm_rank(MPI_COMM_WORLD,&nrank);
     MPI_Comm_size(MPI_COMM_WORLD,&nproc);
-    std::string outputFilename="output";
-    std::string extention=".ppm";
-    std::string outputfile =outputFilename+extention;
-    //Chargement Image
 
-    Image<int> img("lena.ppm");
+    // Arguments d'entrées
+    if(argc<3 && nrank==0){
+        std::cerr<<"Not Enough input Arguments.You must specify:"
+        <<std::endl<<"->The Filename"<<std::endl<<"->the extension (ppm or pgm)"
+        <<std::endl<<"...."<<std::endl;
+        return EXIT_FAILURE;
+    }
+
+    // Préparation du fichier de sorties
+    std::string outputFilename="output";
+    std::string extention;
+    if ( static_cast<std::string>(argv[2]) == "ppm")
+        extention=".ppm";
+    if ( static_cast<std::string>(argv[2]) == "pgm")
+        extention=".pgm";
+    std::string outputfile =outputFilename+extention;
+
+    //Chargement Image
+    Image<int> img(argv[1]);
+
        if(nrank==0){
+        std::cout<<"-->Input Image Carateristics:"<<std::endl;
         std::cout<<"Magic Number : "<<img.getmn()<<std::endl;
         std::cout<<"Image width : "<<img.getw()<<std::endl;
         std::cout<<"Image height : "<<img.geth()<<std::endl;
         std::cout<<"Maxval : "<<img.getmv()<<std::endl;
+        std::cout<<std::endl;
     }
-
-     struct infop infopip;
+    struct infop infopip;
     infopip.rank  = nrank;
     infopip.nproc = nproc;
-    //Convolution
 
+    // Lancement de la Convolution
     if(nproc>1)
     {
         Q = img.geth()/nproc;
         R = img.geth()%nproc;
-
-        if (infopip.rank < R) {
-
-            infopip.nloc = Q+1;
-            infopip.ideb = infopip.rank * (Q+1);
-            infopip.ifin = infopip.ideb + infopip.nloc;
-
-        } else {
-
+        infopip.nloc = Q;
+        infopip.ideb = infopip.rank * infopip.nloc;
+        infopip.ifin = infopip.ideb + infopip.nloc;
+        /*
+        if( (img.getw()*img.geth()) % nproc == 0)
+        {
             infopip.nloc = Q;
-            infopip.ideb = R * (Q+1) + (infopip.rank - R) * Q;
+            infopip.ideb = infopip.rank * infopip.nloc;
             infopip.ifin = infopip.ideb + infopip.nloc;
         }
-        if(infopip.rank==0)
-            infopip.gatherdeb=infopip.ifin;
+        else
+        {
+            if (infopip.rank < R) {
+                infopip.nloc = Q+1;
+                infopip.ideb = infopip.rank * infopip.nloc;
+                infopip.ifin = infopip.ideb + infopip.nloc;
 
-        Convolution<float> convol(img,sharpen<float>(2), infopip);
-         if(infopip.rank==0)
-            convol.save(outputfile,infopip);
+            } else {
+
+                infopip.nloc = Q;
+                infopip.ideb = R * (Q+1) + (infopip.rank-R) * Q;
+                infopip.ifin = infopip.ideb + infopip.nloc;
+            }
+
+        }
+        */
+        if(nrank==0){
+            std::cout<<"-->MPI Status:"<<std::endl;
+            std::cout<<"Number of process :"<<nproc<<std::endl;
+            std::cout<<std::endl;
+        }
+        Convolution<int> convol(img,sharpen<int>(2), infopip);
+
+        MPI_Barrier(MPI_COMM_WORLD);
+
+        for(int rc=0 ; rc < rep ; rc++)
+        {   t0=MPI_Wtime();
+            Convolution<float> convol(img,sharpen<float>(2), infopip);
+            t1=MPI_Wtime();
+            dt+=t1-t0;
+        }
+        if(infopip.rank==0){
+                std::cout<<"Parallel Convolution Time Elapsed:"<<dt/rep<<std::endl;
+                convol.save(outputfile,infopip);
+                std::cout<<"Convolution and Saving Done!"<<std::endl;
+            }
     }
     else
     {
 
-        Convolution<float> convol(img,motionblur<float>());
-        convol.save(outputfile,infopip);
+        Convolution<int> convol(img,motionblur<int>());
+        for(int rc = 0 ;  rc< rep ; rc++)
+        {
+            t0=MPI_Wtime();
+            Convolution<float> convol(img,motionblur<float>());
+                 t1=MPI_Wtime();
+            dt+=t1-t0;
+        }
+
+        if(infopip.rank==0){
+            std::cout<<"Sequential Convolution Time Elapsed:"<<dt/rep<<std::endl;
+            convol.save(outputfile,infopip);
+            std::cout<<"Convolution and Saving Done!"<<std::endl;
+        }
     }
 
     MPI_Finalize();
