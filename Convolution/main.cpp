@@ -17,35 +17,53 @@ int main(int argc, char ** argv)
 {
     //Initialisation MPI
     MPI_Init(&argc,&argv);
-    int nrank;
+    int rank;
     int nproc;
     int nthread;
     int  Q, R;
+    std::string inputFilename;
+    std::string outputFilename="output";
+    std::string extention;
+    std::string outputfile;
     double t0=0.0,t1=0.0,dt=0.0;
-    MPI_Comm_rank(MPI_COMM_WORLD,&nrank);
+    MPI_Comm_rank(MPI_COMM_WORLD,&rank);
     MPI_Comm_size(MPI_COMM_WORLD,&nproc);
 
     // Arguments d'entrées
-    if(argc<3 && nrank==0){
+    if(argc<3 ){
+        /*
         std::cerr<<"Not Enough input Arguments.You must specify:"
         <<std::endl<<"->The Filename"<<std::endl<<"->the extension (ppm or pgm)"
         <<std::endl<<"...."<<std::endl;
         return EXIT_FAILURE;
-    }
-
-    // Préparation du fichier de sorties
-    std::string outputFilename="output";
-    std::string extention;
-    if ( static_cast<std::string>(argv[2]) == "ppm")
-        extention=".ppm";
-    if ( static_cast<std::string>(argv[2]) == "pgm")
+        */
+        if (rank==0){
+        std::cout<<"Default Mode:"
+                 <<"Convolution pgm"
+                 <<std::endl
+                 <<"Image:lena.pgm"
+                 <<std::endl;
+        }
         extention=".pgm";
-    std::string outputfile =outputFilename+extention;
 
+        outputfile =outputFilename+extention;
+        inputFilename="./img/lena.pgm";
+    }
+    else
+    {
+        if ( static_cast<std::string>(argv[2]) == "ppm")
+            extention=".ppm";
+        if ( static_cast<std::string>(argv[2]) == "pgm")
+            extention=".pgm";
+      outputfile =outputFilename+extention;
+        inputFilename=static_cast<std::string>(argv[1]);
+    }
     //Chargement Image
-    Image<int> img(argv[1]);
+        Image<int> img(inputFilename);
+    // Préparation du fichier de sorties
 
-       if(nrank==0){
+
+       if(rank==0){
         std::cout<<"-->Input Image Carateristics:"<<std::endl;
         std::cout<<"Magic Number : "<<img.getmn()<<std::endl;
         std::cout<<"Image width : "<<img.getw()<<std::endl;
@@ -54,7 +72,7 @@ int main(int argc, char ** argv)
         std::cout<<std::endl;
     }
     struct infop infopip;
-    infopip.rank  = nrank;
+    infopip.rank  = rank;
     infopip.nproc = nproc;
 
     // Lancement de la Convolution
@@ -65,6 +83,7 @@ int main(int argc, char ** argv)
         infopip.nloc = Q;
         infopip.ideb = infopip.rank * infopip.nloc;
         infopip.ifin = infopip.ideb + infopip.nloc;
+
         /*
         if( (img.getw()*img.geth()) % nproc == 0)
         {
@@ -86,9 +105,9 @@ int main(int argc, char ** argv)
                 infopip.ifin = infopip.ideb + infopip.nloc;
             }
 
-        }
-        */
-        if(nrank==0){
+        }*/
+
+        if(rank==0){
             std::cout<<"-->MPI Status:"<<std::endl;
             std::cout<<"Number of process :"<<nproc<<std::endl;
             std::cout<<std::endl;

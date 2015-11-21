@@ -1,0 +1,97 @@
+\documentclass[a4paper, 10pt]{article}
+
+\title{\textbf{Mini Projet GLCS: Convolution Parallele pour le Traitement d'image}}
+
+\author{\\
+R\'ealis\'e par: Abdoulaye Diop\\
+}
+\date{}
+
+\begin{document}
+\maketitle
+\mbox{}
+\cleardoublepage
+\renewcommand{\contentsname}{Sommaire}
+\tableofcontents
+
+\cleardoublepage
+\section{Introdution}
+L'objectif de ce projet  est de r\'éaliser from scratch un programme C++ de convolution paralléle oppérant
+ sur des images de format.
+
+
+
+On part d'un code compos\'e des fichiers: 
+\begin{itemize}
+\item fluid\_mihps.c contient les fonctions physique de simulation.  
+\item driver.c contient la fonction principale(main) et deux fonctions d'initialisation et d'affichage de tableaux.
+\item rdtsc.c  contient la fonction rdtsc() qui permet de calculer le nombre de cycles)
+\end{itemize}
+
+\section{Environnement}
+Machine : processeur Intel Haswel Quad core 2Ghz\\
+		  cache size : 6144 KB \\	
+		  Version GCC : 4.8.4\\
+		  		
+Pour nos testes on fixera la taille de la Grille \`a 225 et on boucle avec 10 it\'erations.\\
+On  utilise la fonction rdtsc(), qui renvoit le nombre de cycles \'ecoul\'es lors du calcul.
+t1 : D\'esigne le temps pass\'e dans c\_velocitySolver (u, uOld, v, vOld, curl, d, visc, dt, n, size).\\ 
+t2 : le temps pass\'e dans  c\_densitySolver (d, dOld, diff, u, v, dt, n, size).
+
+\section{Mesure de d\'epart}
+On mesure le temps de calcul, avant l'\'etape d'optimisation du code. 
+On obtient un temps t1 = 1750 cycles et t2 = 440 cycles.\\
+
+\section{Changement dans le makefile}
+Pour une meilleure optimisation on ajoute un -O3  dans CFLAGS la ou sont d\'efinies les options de compilation.\\  
+On enl\`eve le "pg" d\'efini dans le makefile, celui-ci nous permettait de faire appel \`a gprof pour savoir quelle portion de code prenait plus de temps. On utilise \`a la place maqao, en faisant les commandes suivantes : \\
+  maqao perf xp=toto -- ./test 225 20
+  maqao perf xp=toto d=SLX 
+  maqao cqa ./test loop = 7	
+
+
+\section{Test de validation}:
+Pour v\'erifi\'e la v\'eracit\'e de nos r\'esultats apr\'es optimisation, on \'etablit deux fichiers:
+{\it INIT.txt}: fichier de r\'eference contenant les premi\`eres valeurs avant l'optimisation.\\
+{\it REF.txt} : fichier contenant les nouveaux r\'esultats apr\`es optimation.\\
+
+puis on peut comparer les deux en utilisant la commande diff {\it refinit.txt} {\it ref.txt}. 
+
+
+\section{Techniques d'optimisation}    
+
+\subsection{Elimination des divisions}
+Comme premi\`ere optimisation, on remarque une division dans le nid de boucle qui se calcule \`a chaque fois, on d\'efinit donc une 
+const float InverseC = 1/c et on remplace l'op\'eration de  division par une op\'eration de multiplication.\\
+ 
+Apr\`es cette modification on obtient un t1 = 1433 et un t2 = 340
+
+\subsection{D\'eroulage de boucle}
+
+
+La deuxi\`eme piste qu'on exploite est le d\'eroulage de boucles, on commence par d\'erouler sur j, on obtient t1 = 1220 et t2 = 337
+Puis on d\'eroule sur i et j on obtient t1 = 829 et t2 = 197.
+
+Puis on ajoute un niveau de d\'eroulage \`a i et j ( de niveau 3) et on obtient t1 = 639 et t2 = 150.\\
+
+
+\subsection{Changement de l'orde des boucles de calcul}
+La troisi\`eme piste d'optimisation et l'inversement des deux boucles i,j en j,i. \\
+Apr\`es cela on passe \`a t1 = 533 cycles et t2 = 132 cycles. 
+
+
+\section{Conclusion}
+Les simulations scientifiques ont tendance \`a prendre \'enorm\'ement de temps car les calculs sont intensifs et les matrices tr\`es grandes. Une optimisation de code est donc n\'ecessaire.
+
+Dans ce TP il a \'et\'e demand\'e d'optimiser un code de simulation de fluide, apr\`es des tests on a pu rep\'erer les portions de codes qui prennent plus de temps. On a appliquer pas mal de changements(d\'eroulage de boucles, inversement de boucles, \'elimination d'op\'eration de divisions).
+
+Au final on a pu obtenir un code beaucoup plus performants que celui donn\'e.
+ 
+      
+\end{document}
+
+
+
+
+
+

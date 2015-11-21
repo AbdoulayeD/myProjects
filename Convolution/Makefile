@@ -11,13 +11,20 @@ all: compile
 compile:
 	$(CC) $(CFLAGS) $(target).exe $(main)
 
+par:
+	export OMP_NUM_THREADS=4
+	$(CEX) -n 8 ./$(target).exe> $(output)
+
+seq:
+	$(CEX) -n 1 ./$(target).exe> $(output)
+
 parppm:
 	export OMP_NUM_THREADS=4
-	$(CEX) -n 4 ./$(target).exe ./img/flower.ppm ppm> $(output)
+	$(CEX) -n 8 ./$(target).exe ./img/football.ppm ppm> $(output)
 
 parpgm:
 	export OMP_NUM_THREADS=4
-	$(CEX) -n 4 ./$(target).exe ./img/lena.pgm pgm> $(output)
+	$(CEX) -n 10 ./$(target).exe ./img/cake.pgm pgm> $(output)
 
 seqppm:
 	export OMP_NUM_THREADS=4:
@@ -25,7 +32,7 @@ seqppm:
 
 seqpgm:
 	export OMP_NUM_THREADS=4:
-	$(CEX) -n 1 ./$(target).exe ./img/dragon.pgm pgm > $(output)
+	$(CEX) -n 1 ./$(target).exe ./img/cake.pgm pgm > $(output)
 
 
 clean:
@@ -33,5 +40,4 @@ clean:
 	$(RM) output.ppm
 	$(RM) output.pgm
 	$(RM) *.log
-
 

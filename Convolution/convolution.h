@@ -44,23 +44,10 @@ protected:
     double  factor;
     double    bias;
 public:
-    /*
-    Convolution(Image<int> a);
-    Convolution(Image<int> a, double fact, double bia);
-    Convolution(Image<int> a, std::vector<T> kernelt);
-    Convolution(Image<int> a, std::vector<T> kernelt, double fact, double bia);
-    Convolution(Image<int> a, std::vector<T> kernelt, struct infop pinfo);
-    Convolution(Image<int> a, std::vector<T> kernelt, double fact, double bia, struct infop pinfo);
-    */
     Convolution(Image<int> a, struct kstruct<T> kernelt);
     Convolution(Image<int> a, struct kstruct<T> kernelt,struct infop pinfo);
-    //Convolution(Image<int> a, struct kstruct<T> kernelt);
+
     void save(std::string output,struct infop pinfo);
-    /*
-    friend std::vector<T>  decalage(int n);
-    friend std::vector<T>  sharpen(int n);
-    friend std::vector<T>  motionblur(int n);
-    std::vector<T>  edges(int n);*/
 
     ~Convolution(){};
 };
@@ -75,13 +62,13 @@ struct kstruct<T> sharpen(int level)
     kedges.bias=0.0;
     if (level==2)
     {
-        for(int i=0;i<9;i++)
+        for(auto i=0;i<9;i++)
             kedges.k.push_back(1);
         kedges.k[4]=-7;
     }
     if(level==1)
     {
-        for(int i=0;i<9;i++)
+        for(auto i=0;i<9;i++)
             kedges.k.push_back(-1);
         kedges.k[4]=9;
     }
@@ -99,10 +86,10 @@ struct kstruct<T> motionblur()
     kmblur.factor=1.0/9.0;
     kmblur.bias=0.0;
 
-        for(int i=0;i<9*9;i++)
+        for(auto i=0;i<9*9;i++)
             kmblur.k.push_back(0);
 
-        for(int i=0;i<9*9;i+=9+1)
+        for(auto i=0;i<9*9;i+=9+1)
             kmblur.k[i]=1;
     std::cout<<"Filter : Motion Blur"<<std::endl;
     return kmblur;
@@ -116,7 +103,7 @@ struct kstruct<T> blur(int level)
     kblur.bias=0.0;
         if(level==1)
         {
-          for(int i=0;i<9;i++)
+          for(auto i=0;i<9;i++)
                 kblur.k.push_back(0.2);
 
             kblur.k[0]=0.0;
@@ -128,7 +115,7 @@ struct kstruct<T> blur(int level)
         if (level==2)
         {
             kblur.factor=1.0/13.0;
-            for(int i=0;i<25;i++)
+            for(auto i=0;i<25;i++)
                 kblur.k.push_back(1);
 
             kblur.k[0]=0;
@@ -147,7 +134,7 @@ struct kstruct<T> blur(int level)
         if (level >2)
         {
             kblur.factor=1.0/(level*level);
-            for(int i=0;i<level*level;i++)
+            for(auto i=0;i<level*level;i++)
                 kblur.k.push_back(1);
 
         }
@@ -161,7 +148,7 @@ struct kstruct<T> boundaries()
     kboundaries.factor=1.0;
     kboundaries.bias=0.0;
 
-      for(int i=0;i<9;i++)
+      for(auto i=0;i<9;i++)
           kboundaries.k.push_back(1);
 
         kboundaries.k[4]=-4;
@@ -177,14 +164,9 @@ struct kstruct<T> boundaries()
 template<typename T>
 void Convolution<T>::save(std::string output,struct infop pinfo)
 {
-    //std::cout<<"save fonction,proc : "<<pinfo.rank<<std::endl;
-    //MPI_Barrier(MPI_COMM_WORLD);
 
-    //if(pinfo.rank==0)
-    //{
-       //std::cout<<"Start to save,proc : "<<pinfo.rank<<std::endl;
-        int h =cible.geth();
-        int w = (cible.getmn()=="P3") ? cible.getw()*3 : cible.getw();
+        auto h =cible.geth();
+        auto w = (cible.getmn()=="P3") ? cible.getw()*3 : cible.getw();
 
             std::ofstream file(output,std::ios::out);
             if(file)
@@ -193,9 +175,9 @@ void Convolution<T>::save(std::string output,struct infop pinfo)
                 file <<cible.getw()<<" "<<cible.geth()<<std::endl;
                 file <<cible.getmv()<<std::endl;
 
-                for(int i=0;i<h;i++)
+                for(auto i=0;i<h;i++)
                 {
-                    for(int j=0;j<w;j++)
+                    for(auto j=0;j<w;j++)
                     {
                         file<<static_cast<int>(cible(i,j))<<" ";
                     }
@@ -206,7 +188,6 @@ void Convolution<T>::save(std::string output,struct infop pinfo)
             else
                 std::cerr <<"Imposible d'écrire dan le fichier image cyble.\n"<<std::endl;
 
-    //}
 
 }
 
@@ -215,15 +196,14 @@ void Convolution<T>::save(std::string output,struct infop pinfo)
 template<typename T>
 Convolution <T>::Convolution(Image<int> a,struct kstruct<T> kernelt ):cible(a)
 {
-    int n;
-    int mv=cible.getmv();
-    n=kernelt.k.size();
+    auto mv=cible.getmv();
+    auto n=kernelt.k.size();
 
     nkernel=sqrt(n);
 
     std::cout<<"Kernel:"<<nkernel<<std::endl;
-    for(int i=0;i<nkernel;i++){
-        for(int j=0;j<nkernel;j++)
+    for(auto i=0;i<nkernel;i++){
+        for(auto j=0;j<nkernel;j++)
             std::cout<<kernelt.k[index(i,j,nkernel)]<<" ";
         std::cout<<std::endl;
 
@@ -236,19 +216,19 @@ Convolution <T>::Convolution(Image<int> a,struct kstruct<T> kernelt ):cible(a)
     std::cout<<std::endl;
 
 
-    int h =cible.geth();
-    int w = (cible.getmn()=="P3") ? cible.getw()*3 : cible.getw();
-    int stride = (cible.getmn()=="P3") ? 3 : 1;
-    int mod = (cible.getmn()=="P3") ? 3 : 0;
+    auto h =cible.geth();
+    auto w = (cible.getmn()=="P3") ? cible.getw()*3 : cible.getw();
+    auto stride = (cible.getmn()=="P3") ? 3 : 1;
+    auto mod = (cible.getmn()=="P3") ? 3 : 0;
 //#pragma omp parallel for
-    for(int x = 0; x < h; x++)
-        for(int y = 0; y < w ; y++)
+    for(auto x = 0; x < h; x++)
+        for(auto y = 0; y < w ; y++)
         {
-            double newval=0.0;
+            auto newval=0.0;
 
 
-            for(int kx=-1*(nkernel/2);kx<=nkernel/2;kx++)
-                for(int ky=-1*(nkernel/2);ky<=nkernel/2;ky++)
+            for(auto kx=-1*(nkernel/2);kx<=nkernel/2;kx++)
+                for(auto ky=-1*(nkernel/2);ky<=nkernel/2;ky++)
                 {
                      unsigned int imagex=(x+kx)%h;
                      unsigned int imagey=(y+ky*stride)%(w+mod);
@@ -266,22 +246,18 @@ Convolution <T>::Convolution(Image<int> a,struct kstruct<T> kernelt ):cible(a)
 template<typename T>
 Convolution <T>::Convolution(Image<int> a, struct kstruct<T> kernelt, struct infop pinfo ):cible(a)
 {
-    int n;
-    int mv=cible.getmv();
-    int tag=20;
     MPI_Status sta;
-    int nbreq=pinfo.nproc-1;
-
-    n=kernelt.k.size();
+    auto mv=cible.getmv();
+    auto tag=20;
+    auto n=kernelt.k.size();
     nkernel=sqrt(n);
     factor=kernelt.factor;
     bias=kernelt.bias;
 
     if(pinfo.rank==0){
-
         std::cout<<"Kernel:"<<nkernel<<std::endl;
-        for(int i=0;i<nkernel;i++){
-            for(int j=0;j<nkernel;j++)
+        for(auto i=0;i<nkernel;i++){
+            for(auto j=0;j<nkernel;j++)
                 std::cout<<kernelt.k[index(i,j,nkernel)]<<" ";
             std::cout<<std::endl;
 
@@ -295,19 +271,19 @@ Convolution <T>::Convolution(Image<int> a, struct kstruct<T> kernelt, struct inf
     }
 
 
-    int h =cible.geth();
-    int w = (cible.getmn()=="P3") ? cible.getw()*3 : cible.getw();
-    int stride = (cible.getmn()=="P3") ? 3 : 1;
-    int mod = (cible.getmn()=="P3") ? 3 : 0 ;
+    auto h =cible.geth();
+    auto w = (cible.getmn()=="P3") ? cible.getw()*3 : cible.getw();
+    auto stride = (cible.getmn()=="P3") ? 3 : 1;
+    auto mod = (cible.getmn()=="P3") ? 3 : 0 ;
     //std::cout<<"Convolution start:"<<pinfo.rank<<std::endl;
 
     #pragma omp parallel for collapse(2)
-        for(int x = pinfo.ideb; x < pinfo.ifin; x++)
-            for(int y = 0; y < w ; y++)
+        for(auto x = pinfo.ideb; x < pinfo.ifin; x++)
+            for(auto y = 0; y < w ; y++)
             {
-                double newval=0.0;
-                for(int kx=-1*(nkernel/2);kx<=nkernel/2;kx++)
-                    for(int ky=-1*(nkernel/2);ky<=nkernel/2;ky++)
+                auto newval=0.0;
+                for(auto kx=-1*(nkernel/2);kx<=nkernel/2;kx++)
+                    for(auto ky=-1*(nkernel/2);ky<=nkernel/2;ky++)
                     {
                         unsigned int imagex=(x+kx)%h;
                         unsigned int imagey=(y+ky*stride)%(w+mod);
@@ -326,89 +302,11 @@ Convolution <T>::Convolution(Image<int> a, struct kstruct<T> kernelt, struct inf
 
 
         if(pinfo.rank == 0)
-
-            for(int i=1;i<pinfo.nproc;i++)
+            for(auto i=1;i<pinfo.nproc;i++)
                  MPI_Recv(&cible(i*pinfo.nloc,0), pinfo.nloc*w ,MPI_INT,i,tag,MPI_COMM_WORLD,&sta);
 
     //std::cout<<"send done:"<<pinfo.rank<<std::endl;
     MPI_Barrier(MPI_COMM_WORLD);
 }
-
-/*
-template<typename T>
-Convolution <T>::Convolution(Image<int> a, struct kstruct<T> kernelt, struct infop pinfo ):cible(a)
-{
-    int n;
-    int mv=cible.getmv();
-    int tag=20;
-    MPI_Status sta;
-    int nbreq=pinfo.nproc-1;
-
-    n=kernelt.k.size();
-    nkernel=sqrt(n);
-
-
-
-    factor=kernelt.factor;
-    bias=kernelt.bias;
-
-    int h =cible.geth();
-    int w = (cible.getmn()=="P3") ? cible.getw()*3 : cible.getw();
-    int stride = (cible.getmn()=="P3") ? 3 : 1;
-    int mod = (cible.getmn()=="P3") ? 3 : 0 ;
-
-    pinfo.nloc= cible.geth()/pinfo.nproc;
-    std::vector<int> procBuff(pinfo.nloc*w,0);
-    std::vector<int> procBuff2(pinfo.nloc*w,0);
-
-    std::cout<<"scatter start"<<std::endl;
-
-    MPI_Scatter(&a(0,0),pinfo.nloc*w, MPI_INT ,
-                      &procBuff[0], pinfo.nloc*w, MPI_INT, 0,
-                     MPI_COMM_WORLD);
-
-    std::cout<<"scatter pass"<<std::endl;
-    //std::cout<<" Starting Convolution :"<<pinfo.rank<<std::endl;
-    #pragma omp parallel for collapse
-        for(int x = 0; x < pinfo.nloc; x++)
-            for(int y = 0; y < w ; y++)
-            {
-                double newval=0.0;
-
-
-                for(int kx=-1*(nkernel/2);kx<=nkernel/2;kx++)
-                    for(int ky=-1*(nkernel/2);ky<=nkernel/2;ky++)
-                    {
-
-
-                        unsigned int imagex=(x+kx)%pinfo.nloc;
-                        unsigned int imagey=(y+ky*stride)%(w+mod);
-
-
-
-                        newval+=static_cast<double>(procBuff[imagex*w+imagey])*kernelt.k[n/2 + kx + nkernel*ky];
-                    }
-                newval=factor*newval + bias;
-
-                if (newval< 0.0) newval= 0.0;
-                if (newval > mv) newval=mv;
-                procBuff2[x*w+y]=static_cast<int>(newval);
-
-            }
-    std::cout<<"convol pass,"<<" "<<std::endl;
-       //MPI_Barrier(MPI_COMM_WORLD);
-        if (pinfo.rank != 0)
-            MPI_Send(&procBuff2,pinfo.nloc*w,MPI_INT,0,tag,MPI_COMM_WORLD);
-
-
-        if(pinfo.rank == 0)
-
-            for(int i=1;i<pinfo.nproc;i++)
-                 MPI_Recv(&cible(i*pinfo.nloc,0), pinfo.nloc*w ,MPI_INT,i,tag,MPI_COMM_WORLD,&sta);
-
-    //std::cout<<"send done:"<<pinfo.rank<<std::endl;
-    MPI_Barrier(MPI_COMM_WORLD);
-}*/
-
 
 #endif /* Convolution_h */
