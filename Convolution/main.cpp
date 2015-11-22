@@ -8,9 +8,10 @@
 
 //typedef convolType int;
 #include <iostream>
+#include<cmath>
 #include <omp.h>
 #include "convolution.h"
-#define rep 10
+#define rep 1
 //#include <mpi.h>
 
 int main(int argc, char ** argv)
@@ -78,19 +79,21 @@ int main(int argc, char ** argv)
     // Lancement de la Convolution
     if(nproc>1)
     {
-        Q = img.geth()/nproc;
-        R = img.geth()%nproc;
+        Q = ceil(img.geth()/nproc);
+        R = (img.geth()%nproc);
         infopip.nloc = Q;
         infopip.ideb = infopip.rank * infopip.nloc;
         infopip.ifin = infopip.ideb + infopip.nloc;
 
+        
         /*
-        if( (img.getw()*img.geth()) % nproc == 0)
+        if( img.geth() % nproc == 0)
         {
             infopip.nloc = Q;
             infopip.ideb = infopip.rank * infopip.nloc;
             infopip.ifin = infopip.ideb + infopip.nloc;
         }
+        
         else
         {
             if (infopip.rank < R) {
@@ -106,6 +109,8 @@ int main(int argc, char ** argv)
             }
 
         }*/
+        
+        
 
         if(rank==0){
             std::cout<<"-->MPI Status:"<<std::endl;

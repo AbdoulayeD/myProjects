@@ -88,15 +88,6 @@ Image<T>::Image(std::string imgname)
                 std::cerr <<"Imposible d'ouvrir le fichier image, il ne respecte pas les bornes.\n"<<std::endl;
         }
 
-
-
-        /*
-        std::cout<<"Magic Number:"<<mNumber<<std::endl;
-        std::cout<<"Width:"<<width<<std::endl;
-        std::cout<<"Height:"<<height<<std::endl;
-        std::cout<<"Maxval:"<<maxval<<std::endl;
-        */
-        //std::cout<< "data:\n"<<data<<std::endl;
         file.close();
     }
     else
@@ -107,7 +98,7 @@ template<typename T>
 std::ostream& operator<< (std::ostream&  os ,const Image<T>& a )
 {
     os<<a.mNumber<<std::endl
-    <<a->width<<std::endl
+    <<a.width<<std::endl
     <<a.height<<std::endl
     <<a.data ;
     return os;

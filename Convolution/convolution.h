@@ -297,16 +297,23 @@ Convolution <T>::Convolution(Image<int> a, struct kstruct<T> kernelt, struct inf
 
             }
         //std::cout<<"Convolution stop:"<<pinfo.rank<<std::endl;
-        if (pinfo.rank != 0)
+    if (pinfo.rank != 0){
+            //MPI_Send(&pinfo.nloc,1,MPI_INT,0,11,MPI_COMM_WORLD);
             MPI_Send(&cible(pinfo.ideb,0),pinfo.nloc*w,MPI_INT,0,tag,MPI_COMM_WORLD);
+        
+            }
 
-
-        if(pinfo.rank == 0)
-            for(auto i=1;i<pinfo.nproc;i++)
-                 MPI_Recv(&cible(i*pinfo.nloc,0), pinfo.nloc*w ,MPI_INT,i,tag,MPI_COMM_WORLD,&sta);
+    
+        if(pinfo.rank == 0){
+            //int k;
+            for(auto i=1;i<pinfo.nproc;i++){
+                //MPI_Recv(&k, 1 ,MPI_INT,i,11,MPI_COMM_WORLD,&sta);
+                MPI_Recv(&cible(i*pinfo.nloc,0), /*k*w*/pinfo.nloc*w ,MPI_INT,i,tag,MPI_COMM_WORLD,&sta);
+            }
+        }
 
     //std::cout<<"send done:"<<pinfo.rank<<std::endl;
-    MPI_Barrier(MPI_COMM_WORLD);
+    //MPI_Barrier(MPI_COMM_WORLD);
 }
 
 #endif /* Convolution_h */
